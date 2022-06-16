@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: Hotel-Service
+  zipkin:
+    base-url: http://127.0.0.1:9411/
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8098
+  mvc:
+   pathmatch:
+      matching-strategy: ant-path-matcher
+  profiles:
+    active:
+    - QA
+server:
+  port: 8092
