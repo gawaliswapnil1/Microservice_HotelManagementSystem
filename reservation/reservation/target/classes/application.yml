@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/reservation
+    username: "root"
+    password: "root"
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+  application:
+    name: Reservation-Service
+  zipkin:
+    base-url: http://127.0.0.1:9411/
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8098 
+  mvc:
+   pathmatch:
+      matching-strategy: ant-path-matcher
+ # profiles:
+ #   active:
+ #   - QA
+server:
+  port: 8093
+  
