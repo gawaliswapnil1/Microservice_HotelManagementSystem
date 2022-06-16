@@ -1,0 +1,12 @@
+server:
+  port: 8098
+
+spring:
+  application:
+    name: CONFIG-SERVER
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/gawaliswapnil1/config-server
+          clone-on-start: true

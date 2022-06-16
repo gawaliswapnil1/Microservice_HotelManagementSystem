@@ -1,0 +1,68 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway: 
+     routes:
+        - id: Guest-Service
+          uri: lb://Guest-Service
+          predicates:
+            - Path=/guests/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: Guest-Service
+                fallbackuri: forward:/guestServiceFallBack
+        - id: Hotel-Service
+          uri: lb://Hotel-Service
+          predicates:
+            - Path=/hotels/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: Hotel-Service
+                fallbackuri: forward:/hotelServiceFallBack
+        - id: Reservation-Service
+          uri: lb://Reservation-Service
+          predicates:
+            - Path=/reservations/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: Reservation-Service
+                fallbackuri: forward:/reservationServiceFallBack
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: auth-service
+                fallbackuri: forward:/auth-fallback
+               
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+        
+jwt:
+  secret: BvPHGM8C0ia4uOuxxqPD5DTbWC9F9TWvPStp3pb7ARo0oK2mJ3pd3YG4lxA9i8bj6OTbadwezxgeEByY
